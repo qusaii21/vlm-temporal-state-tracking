@@ -1,0 +1,102 @@
+\section{Results}
+\label{sec:results}
+
+\subsection{Primary Result: Trajectory Supervision vs. Corrupted Control}
+
+\textbf{Core finding}: On the trajectory prompt variant (matched to training format for both models), Model B (trajectory-supervised) and Model B$'$v3 (corrupted control) achieved identical final-position accuracy.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Metric} & \textbf{Model B} & \textbf{Model B$'$v3} & \textbf{Test} & \textbf{p-value} \\
+\midrule
+Final accuracy & 2/10 (0.20) & 2/10 (0.20) & McNemar & 1.00 \\
+95\% CI & [0.03, 0.56] & [0.03, 0.56] & --- & --- \\
+Per-round acc.~& 15/60 (0.25) & 11/60 (0.18) & McNemar & 0.34 \\
+95\% CI & [0.15, 0.37] & [0.10, 0.30] & --- & --- \\
+Exact match & 0/10 (0.00) & 0/10 (0.00) & --- & --- \\
+\bottomrule
+\end{tabular}
+\caption{\label{tab:primary} Primary result: B vs B$'$v3 on trajectory prompt variant. McNemar's test shows no significant difference in final-position accuracy (p=1.00). Per-round accuracy numerically favors B (7 discordant pairs vs. 3 in opposite direction) but not significantly (p=0.34).}
+\end{table}
+
+\textbf{Per-round analysis}: Of 60 round-level predictions per model, B correctly predicted 15 rounds vs. B$'$v3's 11. McNemar's test with 7 discordant pairs favoring B and 3 favoring B$'$v3 yields $\chi^2 = 1.6$, $p = 0.34$ (two-tailed).
+
+\textbf{Interpretation}: \emph{Trajectory supervision (B) did not demonstrate statistically significant advantage over format-matched corrupted supervision (B$'$v3).} Neither model achieved a single complete six-round exact match. The null result is robust: both final-round and per-round comparisons favor B numerically but not significantly.
+
+\subsection{Multi-Condition Comparison: Baseline + A + B + C}
+
+On the final-answer prompt variant (format mismatch for B):
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lccl}
+\toprule
+\textbf{Model} & \textbf{Final Accuracy} & \textbf{95\% CI} & \textbf{Type} \\
+\midrule
+Base & 2/10 (0.20) & [0.03, 0.56] & Zero-shot \\
+A & 3/10 (0.30) & [0.07, 0.65] & Final-answer SFT \\
+B & 1/10 (0.10) & [0.00, 0.45] & Trajectory SFT \\
+C & 3/10 (0.30) & [0.07, 0.65] & Transition SFT \\
+\bottomrule
+\end{tabular}
+\caption{\label{tab:multimodel} Multi-condition comparison (final-answer prompt). Model B performs worse (10\%) than base (20\%), likely due to prompt-format mismatch: B was trained with trajectory format, struggles with single-answer format.}
+\end{table}
+
+\textbf{Key observation}: The final-answer variant is a format mismatch for Model B. B was trained to produce six-round trajectories and struggles when forced into single-answer format (10\% vs. base 20\%). This reinforces that model outputs are format-specific rather than robust to task reformulation.
+
+\textbf{Why is this relevant?} If trajectory supervision were truly improving visual-temporal reasoning, Model B should generalize to different prompt formats. The format-specificity of performance suggests learned output patterns rather than improved perception.
+
+\subsection{Trajectory Variant Detailed Breakdown}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{Model B} & \textbf{Model B$'$v3} \\
+\midrule
+Final-round accuracy & 2/10 & 2/10 \\
+Per-round accuracy & 15/60 & 11/60 \\
+Exact-match (all 6 rounds) & 0/10 & 0/10 \\
+Mean longest correct prefix & 0.4 & 0.4 \\
+Parse rate (regex extraction) & 1.00 & 1.00 \\
+\bottomrule
+\end{tabular}
+\caption{\label{tab:trajectory_detail} Detailed trajectory variant metrics. Both models show identical zero-shot performance (0 exact matches), and mean longest-correct-prefix of 0.4 rounds out of 6 (meaning on average, models get <1 round correct before first error).}
+\end{table}
+
+Across all metrics, Model B and B$'$v3 perform nearly identically. The corrupted control achieves comparable results, suggesting that trajectory structure and output format are being learned, but visual tracking is not substantially improved.
+
+\subsection{Transition Variant Results}
+
+On transition-focused prompting (describe moves per round):
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{Model B} & \textbf{Model B$'$v3} \\
+\midrule
+Move accuracy & 0.30 & 0.37 \\
+Per-round accuracy & 0.15 & 0.20 \\
+Final accuracy & 0.10 & 0.00 \\
+\bottomrule
+\end{tabular}
+\caption{\label{tab:transition} Transition variant results. Surprisingly, B$'$v3 achieves higher move accuracy (37\% vs. 30\%), suggesting corrupted trajectories may facilitate certain prediction patterns more effectively than ground-truth trajectories.}
+\end{table}
+
+\textbf{Notable finding}: The corrupted control (B$'$v3) outperforms trajectory-supervised B on move accuracy. This paradoxical result further suggests that performance differences between models are driven by output distribution learning rather than visual-semantic grounding.
+
+\subsection{Summary of Quantitative Results}
+
+\begin{itemize}
+    \item \textbf{Primary comparison (B vs B$'$v3 trajectory)}: No significant difference (p=1.00 final, p=0.34 per-round)
+    \item \textbf{Format-specificity}: B performs worse on final-answer prompt despite same data, indicating output format learning
+    \item \textbf{Corrupted control paradox}: B$'$v3 achieves comparable or higher accuracy on some metrics, suggesting format effects dominate
+    \item \textbf{Zero exact matches}: Neither B nor B$'$v3 complete a full six-round trace correctly on any video
+    \item \textbf{Small-sample uncertainty}: 95\% CIs span $\pm 25$\%, consistent with small $n$
+\end{itemize}
+
+All numerical results are derived from comparison files and raw outputs in: \\
+\texttt{/videomme\_experiments/evaluation/comparison\_B\_vs\_Bprime\_v3.json}

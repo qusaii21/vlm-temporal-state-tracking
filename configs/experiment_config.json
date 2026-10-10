@@ -1,0 +1,51 @@
+{
+  "model": {
+    "model_id": "Qwen/Qwen2.5-VL-3B-Instruct",
+    "quantization": {
+      "load_in_4bit": true,
+      "bnb_4bit_quant_type": "nf4",
+      "bnb_4bit_use_double_quant": true,
+      "bnb_4bit_compute_dtype": "float16"
+    },
+    "freeze_vision_tower": true,
+    "freeze_merger": true,
+    "freeze_llm": true
+  },
+  "lora": {
+    "lora_enable": true,
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": "all-linear"
+  },
+  "training": {
+    "per_device_train_batch_size": 1,
+    "gradient_accumulation_steps": 8,
+    "num_train_epochs": 3,
+    "learning_rate": 0.0001,
+    "lr_scheduler_type": "cosine",
+    "weight_decay": 0.01,
+    "optim": "adamw_bnb_8bit",
+    "max_seq_length": 4096,
+    "fp16": true,
+    "bf16": false,
+    "gradient_checkpointing": true
+  },
+  "video_processing": {
+    "nframes": 24,
+    "video_resized_width": 224,
+    "video_resized_height": 224,
+    "reader": "decord"
+  },
+  "cross_validation": {
+    "n_folds": 5,
+    "cv_seed": 20261001,
+    "fold0_seed": 20260917,
+    "corruption_seed_v3": 56182047
+  },
+  "inference": {
+    "max_new_tokens_final": 16,
+    "max_new_tokens_trajectory": 256,
+    "do_sample": false
+  }
+}

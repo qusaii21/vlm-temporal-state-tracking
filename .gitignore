@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Checkpoints and Large Weights
+*.safetensors
+*.bin
+*.pt
+*.pth
+checkpoints/
+models/
+lora_adapters/
+
+# Data and Videos
+videos/
+*.mp4
+*.avi
+*.mov
+*.tar.gz
+*.zip
+
+# Virtual Environments
+.venv/
+venv/
+env/
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.synctex.gz
+paper/latex/*.aux
+paper/latex/*.bbl
+paper/latex/*.blg
+paper/latex/*.log
+paper/latex/*.out

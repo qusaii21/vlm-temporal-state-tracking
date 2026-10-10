@@ -1,0 +1,62 @@
+[
+  {
+    "fold": 0,
+    "n": 40,
+    "methods": {
+      "hungarian_move_matched": 40
+    },
+    "mean_moves_true": 2.975,
+    "mean_moves_corrupted": 3.0,
+    "move_hist_l1": 2,
+    "letter_freq_l1": 0,
+    "majority_diverged": 29
+  },
+  {
+    "fold": 1,
+    "n": 40,
+    "methods": {
+      "hungarian_move_matched": 40
+    },
+    "mean_moves_true": 3.2,
+    "mean_moves_corrupted": 3.25,
+    "move_hist_l1": 2,
+    "letter_freq_l1": 0,
+    "majority_diverged": 23
+  },
+  {
+    "fold": 2,
+    "n": 40,
+    "methods": {
+      "hungarian_move_matched": 40
+    },
+    "mean_moves_true": 3.025,
+    "mean_moves_corrupted": 3.025,
+    "move_hist_l1": 4,
+    "letter_freq_l1": 0,
+    "majority_diverged": 22
+  },
+  {
+    "fold": 3,
+    "n": 40,
+    "methods": {
+      "hungarian_move_matched": 40
+    },
+    "mean_moves_true": 3.275,
+    "mean_moves_corrupted": 3.35,
+    "move_hist_l1": 6,
+    "letter_freq_l1": 0,
+    "majority_diverged": 31
+  },
+  {
+    "fold": 4,
+    "n": 40,
+    "methods": {
+      "hungarian_move_matched": 40
+    },
+    "mean_moves_true": 3.325,
+    "mean_moves_corrupted": 3.375,
+    "move_hist_l1": 4,
+    "letter_freq_l1": 0,
+    "majority_diverged": 31
+  }
+]

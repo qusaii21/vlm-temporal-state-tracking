@@ -1,0 +1,13 @@
+torch>=2.4.0
+torchvision
+transformers==4.47.0
+accelerate>=0.34.0
+peft>=0.13.0
+bitsandbytes>=0.43.0
+decord>=0.6.0
+qwen-vl-utils[decord]>=0.0.8
+scipy>=1.11.0
+numpy>=1.24.0
+matplotlib>=3.7.0
+huggingface-hub>=0.24.0
+pypdf>=3.0.0

@@ -1,0 +1,105 @@
+\section{Analysis and Discussion}
+\label{sec:analysis}
+
+\subsection{Interpretation of Null Result}
+
+Our primary finding---trajectory supervision (B) not significantly outperforming corrupted control (B$'$v3)---admits multiple interpretations:
+
+\textbf{Hypothesis 1: Format learning dominates.} The model learns to produce six position labels matching training distribution but does not ground predictions in visual-temporal semantics. Both B and B$'$ learn format; neither learns tracking.
+
+\textbf{Hypothesis 2: Insufficient model capacity.} The 3B model lacks capacity for robust visual-temporal reasoning. Larger models (7B, 72B variants) might succeed where this one fails.
+
+\textbf{Hypothesis 3: Task-specific ceiling effects.} The card-relocation task may have particular visual confounds (card similarity, motion complexity) that mask model capabilities.
+
+\textbf{Hypothesis 4: Sample size insufficient.} With $n=10$, we may lack power to detect modest but real improvements (minimum detectable effect \textasciitilde60\%).
+
+\textbf{Our position}: We report the null result as a \emph{conditional finding} that holds for this specific setup (Qwen2.5-VL-3B, frozen vision tower, 40 training examples, native video input). Replication with larger samples and diverse models is necessary before generalizing.
+
+\subsection{Format Learning vs. Semantic Tracking}
+
+Strong evidence suggests output format learning dominates:
+
+\textbf{1. Format-specificity of performance:} Model B achieves 20\% on trajectory prompts (matched format) but only 10\% on final-answer prompts (mismatched format). If B learned genuinely improved tracking, performance should generalize across prompt formats. The 10-percentage-point drop suggests models learn format-specific patterns rather than robust tracking capability.
+
+\textbf{2. Corrupted control parity:} Model B$'$v3, trained on semantically invalid but statistically identical trajectories, achieves comparable accuracy. This is difficult to explain if B learned visual tracking (it should fail on B$'$ which has no visual correspondence). But it is easily explained if both models learn output distribution.
+
+\textbf{3. Corrupted control dominance on transition variant:} On move-accuracy metric, B$'$v3 (37\%) outperforms B (30\%). This paradox directly contradicts the hypothesis that B exploits visual information. It suggests both models are fitting output statistics, and corrupted trajectories may provide more stable patterns for move prediction.
+
+\textbf{4. Zero exact matches:} Neither B nor B$'$v3 completes a single six-round trace correctly. This suggests both models are making local predictions per round, not maintaining persistent state across the sequence.
+
+\subsection{Positioning Relative to Prior Work}
+
+Our work complements Video-MME benchmark results~\cite{fu2024video} that show logical reasoning tasks challenge current VLMs. However, we go deeper: not only do models perform poorly, but we provide evidence suggesting performance comes from format learning rather than visual reasoning.
+
+Our null result echoes findings in shortcut learning~\cite{geirhos2020shortcut}: models exploit dataset statistics and output patterns before learning intended task solutions. The B$'$v3 control follows best practices from causal inference and neuroscience (corrupted negative controls), applying them to VLM evaluation.
+
+Chain-of-thought literature~\cite{wei2022chain} shows intermediate-step elicitation improves language reasoning. Our trajectory \emph{supervision} (training with intermediate labels) is conceptually similar but shows different results. This suggests visual-linguistic grounding differs from purely linguistic reasoning: intermediate supervision may not transfer the same benefits to vision tasks.
+
+\subsection{Limitations and Validity Threats}
+
+\textbf{Sample size}: $n=10$ test videos is severe. 95\% CIs span $\pm 25$\% for moderate frequencies. We cannot distinguish true null effects from underpowered detection of modest effects.
+
+\textbf{Single model}: We test only Qwen2.5-VL-3B-Instruct. Findings may not generalize to larger models, different architectures (e.g., VideoLLaMA), or other vision encoders.
+
+\textbf{Synthetic task}: Card-relocation is artificially simple. Naturalistic videos may exhibit different properties (visual ambiguity, causal complexity) affecting tracking behavior.
+
+\textbf{Frozen vision tower}: We froze the vision encoder and applied LoRA only to language layers. Full-model fine-tuning might enable visual-temporal feature learning.
+
+\textbf{Dataset confound}: The target $\equiv$ initial target-position confound, though identified and mitigated, demonstrates that even curated datasets can harbor artifacts.
+
+\textbf{Frame-shuffle control invalidity}: Step 9 used separate-image input rather than native video, preventing causal inference about temporal ordering.
+
+\subsection{Statistical Power Analysis}
+
+With $n=10$ test videos, we can detect effects of approximately 60\% magnitude at 80\% power.
+
+\textbf{Minimum detectable effect (MDE) for final-position accuracy at $n=10$, $\alpha=0.05$, 80\% power:}
+\begin{itemize}
+    \item McNemar's test with $\approx 6$ discordant pairs (one direction) requires effect size $\geq 60\%$
+    \item Current result: B=20\%, B$'$=20\% $\Rightarrow$ MDE calculation: could detect B$\geq 80\%$, B$'$ $\leq 20\%$
+\end{itemize}
+
+\textbf{Sample size for smaller effects:}
+\begin{itemize}
+    \item 25\% effect: $n \geq 30$ videos
+    \item 20\% effect: $n \geq 50$ videos
+    \item 15\% effect: $n \geq 80$ videos
+\end{itemize}
+
+\textbf{Interpretation}: To reliably detect a 20\% improvement (e.g., B at 40\%, B$'$ at 20\%), we would need $n \geq 50$ test videos. Our $n=10$ is adequate only for large effects ($\geq 60\%$).
+
+\subsection{Conditions That Would Change Our Conclusion}
+
+We maintain the cautious null-result framing given:
+
+\begin{enumerate}
+    \item \textbf{Larger-scale replication ($n \geq 30$)}: If new experiments with adequate power show B $\gg$ B$'$, null interpretation would shift to ``insufficient sample size'' in original study.
+    
+    \item \textbf{Larger models show clear separation}: If Qwen2-VL-7B or -72B achieve B=60\%, B$'$=20\% on the same task, capacity limitations would be the explanation.
+    
+    \item \textbf{Different tasks show consistent B > B$'$}: If trajectory supervision outperforms corrupted controls on diverse reasoning tasks, we would conclude our null result is task-specific.
+    
+    \item \textbf{Mechanistic evidence for utilization}: If attention visualizations or representation probes show B uses visual features while B$'$ does not (despite similar accuracy), it would suggest partial learning masked by task difficulty.
+    
+    \item \textbf{Ablation studies}: Unfreezing vision tower, using different LoRA configurations, or employing longer training might yield different results.
+\end{enumerate}
+
+Currently, none of these conditions are met. We maintain the null-result interpretation as our best hypothesis under $n=10$ constraints.
+
+\subsection{Implications for VLM Evaluation}
+
+This work establishes several best practices for controlled VLM studies:
+
+\begin{enumerate}
+    \item \textbf{Use format-matched negative controls}: Don't compare supervised (B) vs. zero-shot (Base) alone. Include corrupted controls (B$'$) that preserve format but break semantics.
+    
+    \item \textbf{Audit datasets for shortcuts}: Early diagnostics showed inflated accuracy due to target $\equiv$ initial\_position. Manual ground-truth auditing was essential.
+    
+    \item \textbf{Test across prompt formats}: If model outputs are format-specific, report that explicitly. It's evidence against robust learning.
+    
+    \item \textbf{Report exact counts and CIs}: With small $n$, report 2/10 not just 20\%, and include 95\% CIs to communicate uncertainty.
+    
+    \item \textbf{Transparent power analysis}: Explicitly state minimum detectable effects and sample-size requirements for claimed effect sizes.
+    
+    \item \textbf{Honest null reporting}: Don't cherry-pick metrics or post-hoc analyses. Report findings as they are, with appropriate caveats.
+\end{enumerate}

@@ -1,0 +1,14 @@
+\begin{abstract}
+
+Recent vision-language models (VLMs) demonstrate impressive performance on visual question-answering tasks, yet their ability to track and maintain object states across video sequences remains unclear. In this work, we conduct a controlled behavioral study to investigate whether intermediate-state supervision (trajectory prompting) genuinely improves temporal tracking, or primarily teaches output format patterns. Using Qwen2.5-VL-3B-Instruct on a card-relocation task with discrete, observable state changes, we compare:
+\begin{itemize}
+    \item \textbf{Base}: zero-shot pretrained model
+    \item \textbf{Model A}: final-position supervision only
+    \item \textbf{Model B}: full six-round position trajectory
+    \item \textbf{Model B$'$v3}: format-matched corrupted trajectories (negative control)
+    \item \textbf{Model C}: transition descriptions
+\end{itemize}
+
+On a held-out 10-video test set, trajectory-supervised Model B (20\% accuracy, 2/10) showed no statistically significant advantage over the corrupted control B$'$v3 (also 20\%, McNemar's $p=1.00$). Native video diagnostics confirmed true temporal input (24 frames per video), yet the model achieved 0\% complete trace accuracy and ~19\% single-round accuracy. Dataset audits revealed a systematic confound (target\_card $\equiv$ initial\_position across all 50 videos), invalidating early diagnostics. We frame this as a \emph{cautious null result}: trajectory supervision did not demonstrate clear advantage under these conditions. Contributions include: (1) a format-matched negative control methodology for VLM evaluation, (2) transparent reporting of small-sample null findings, and (3) reproducible artifacts with complete audit trail. Our work demonstrates the necessity of rigorous controls and validity auditing in VLM behavioral studies.
+
+\end{abstract}

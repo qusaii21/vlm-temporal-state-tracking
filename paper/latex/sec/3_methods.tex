@@ -1,0 +1,166 @@
+\section{Methods}
+\label{sec:methods}
+
+\subsection{Card-Relocation Task}
+
+The task presents videos where:
+\begin{itemize}
+    \item Four cards (A, B, C, D) occupy four positions
+    \item One card is designated the target
+    \item Over six rounds, pairs of cards swap positions
+    \item The model must track the target's position after each round
+\end{itemize}
+
+This design provides discrete observable states, unambiguous ground truth, and compositional structure requiring iterative updates---ideal for isolating state-tracking capability.
+
+\subsection{Dataset: Video-MME Logical Reasoning}
+
+We use the \dataset{video-mme-logical} dataset~\cite{fu2024video}, specifically the card-relocation subset:
+\begin{itemize}
+    \item \textbf{Total videos}: 50 (card\_relocation\_s\_easy)
+    \item \textbf{Duration per video}: 15--20 seconds
+    \item \textbf{Frames}: 24 per video (native Qwen temporal input)
+    \item \textbf{Rounds per video}: 6 (sequential position updates)
+    \item \textbf{Ground truth per round}: target position (A/B/C/D)
+\end{itemize}
+
+\textbf{Dataset audit finding}: Across all 50 videos, target\_card $\equiv$ initial\_position. This confound invalidated early diagnostics (initial-position accuracy ~76\% could be achieved by repeating target without visual grounding). Subsequent experiments use only final-position and trajectory accuracy.
+
+\subsection{Train-Test Split}
+
+Fixed split established with random seed 20260917:
+\begin{itemize}
+    \item \textbf{Training}: 40 videos
+    \item \textbf{Held-out test}: 10 videos
+    \item \textbf{Test IDs}: card\_relocation\_s\_L1\_\{0010, 0015, 0024, 0025, 0027, 0031, 0037, 0038, 0048, 0049\}\_v3
+\end{itemize}
+
+Split was fixed \emph{before} any model training to prevent data leakage.
+
+\subsection{Model: Qwen2.5-VL-3B-Instruct}
+
+\textbf{Base architecture}:
+\begin{itemize}
+    \item \textbf{Model}: \model{Qwen/Qwen2.5-VL-3B-Instruct}
+    \item \textbf{Parameters}: 3B (chosen for computational accessibility)
+    \item \textbf{Architecture}: Vision tower (frozen) + visual-text merger (frozen) + language decoder (LoRA adapters)
+\end{itemize}
+
+\textbf{Fine-tuning configuration}:
+\begin{itemize}
+    \item \textbf{Method}: QLoRA (4-bit quantization + Low-Rank Adaptation)
+    \item \textbf{LoRA rank}: 16; alpha: 32; dropout: 0.05
+    \item \textbf{Target modules}: Language-side attention and MLP layers
+    \item \textbf{Batch size}: 1 (gradient accumulation: 8, effective batch: 8)
+    \item \textbf{Learning rate}: 1e-4; optimizer: AdamW; scheduler: cosine with warmup
+    \item \textbf{Epochs}: 3
+    \item \textbf{Max sequence length}: 4096 tokens
+    \item \textbf{Video frames}: 24 per video (native Qwen pathway)
+\end{itemize}
+
+\textbf{Hardware}: Google Colab Pro, Tesla T4 GPU (14.56 GB VRAM)
+
+\textbf{Repository}: github.com/2U1/Qwen-VL-Series-Finetune, commit 67078206604820beb20bddbe24c94a0b4a4bd6d4, with custom patches (torchao removal, video path resolution, native temporal metadata handling).
+
+\subsection{Training Data Construction}
+
+All models trained on 40 videos with different supervision types:
+
+\textbf{Model A (final-answer only)}:
+\begin{verbatim}
+Query: "Track target card X. Final position?"
+Response: "The final position is: [position]"
+\end{verbatim}
+
+\textbf{Model B (trajectory)}:
+\begin{verbatim}
+Query: "Track target card X through six rounds."
+Response: "Round 1: A
+           Round 2: B
+           ...
+           Round 6: C
+           Final: C"
+\end{verbatim}
+
+\textbf{Model C (transition)}:
+\begin{verbatim}
+Query: "Describe moves for target card X."
+Response: "Round 1: swap A↔B, target at B
+           Round 2: swap B↔D, target at D
+           ...
+           Final: C"
+\end{verbatim}
+
+\textbf{Model B$'$v3 (corrupted trajectory---negative control)}:
+
+Uses cross-example Hungarian move-count matching:
+\begin{enumerate}
+    \item For each training video $v_i$, build candidate pool of ground-truth traces from other 39 videos
+    \item Compute cost matrix: cost[$i,j$] = $|$move\_count$(v_i) -$ move\_count$(v_j)|$
+    \item Hungarian algorithm: find minimum-cost one-to-one assignment across 40 videos
+    \item Assign video $v_i$ the ground-truth trace from source video $v_j$ (where $i \neq j$)
+\end{enumerate}
+
+\textbf{Result}: Corpus-level statistics identical to ground truth:
+\begin{itemize}
+    \item Letter frequency L1 distance: 0
+    \item Mean move count: 2.975 (ground truth) vs. 3.000 (B$'$v3)
+    \item Move histogram L1 distance: 2
+    \item Exact trace matches: 0 (by construction)
+    \item Majority divergence: 31/40 (77.5\%)
+\end{itemize}
+
+This control preserves output format and statistical properties while breaking visual-label correspondence, enabling isolation of format learning from semantic learning.
+
+\subsection{Evaluation Protocol}
+
+All models evaluated on the same 10 held-out test videos using three prompt variants:
+
+\textbf{Final-answer variant}:
+\begin{quote}
+``Track target X. Final position? Answer: [A/B/C/D]''
+\end{quote}
+
+\textbf{Trajectory variant} (primary comparison):
+\begin{quote}
+``Track X through six rounds. Round 1: [pos], \ldots, Round 6: [pos]''
+\end{quote}
+
+\textbf{Transition variant}:
+\begin{quote}
+``Round 1: swap X↔Y, position [pos], \ldots''
+\end{quote}
+
+\textbf{Inference settings}:
+\begin{itemize}
+    \item Temperature: 0.0 (greedy decoding)
+    \item Max new tokens: 512
+    \item Video input: 24 frames per video (native temporal path)
+\end{itemize}
+
+\textbf{Metrics}:
+\begin{itemize}
+    \item \textbf{Final-position accuracy}: proportion of 10 test videos with correct final prediction
+    \item \textbf{Per-round accuracy}: proportion of 60 round-level predictions correct
+    \item \textbf{Exact-match accuracy}: proportion of videos with all 6 rounds correct
+    \item \textbf{95\% confidence intervals}: Clopper-Pearson exact binomial
+    \item \textbf{Statistical test}: McNemar's test for paired comparisons
+\end{itemize}
+
+\subsection{Validity Auditing}
+
+\textbf{Target-position confound}: Manual audit of all 50 videos revealed target\_card $\equiv$ initial\_position. This invalidated initial-position diagnostics but motivated redesigned evaluation focusing on final-position and trajectories.
+
+\textbf{Invalid L2 experiment}: An earlier experiment (L2 with 0/50 split) used incorrect ground-truth field names. Excluded entirely from scientific results.
+
+\textbf{E1a native video diagnostic}: Base model evaluated on all 50 videos using native Qwen video input (24 frames) to verify proper temporal processing and establish performance ceiling.
+
+\subsection{Statistical Approach}
+
+Given $n=10$ test videos:
+\begin{itemize}
+    \item Exact binomial 95\% CIs: [$\frac{k}{n}$ $\pm$ ~0.35 for moderate frequencies]
+    \item McNemar's test: paired binary comparisons with discordant pair reporting
+    \item Power analysis: minimum detectable effect $\approx 60\%$ for final-position accuracy at $n=10$
+    \item Explicit uncertainty: conditional findings requiring replication with $n \geq 30$
+\end{itemize}

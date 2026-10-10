@@ -1,0 +1,243 @@
+{
+  "generated": "2026-10-06T11:59:10",
+  "inference_rerun": false,
+  "what_L2_was": "L2b: Round-1 clip (2.5s-7.5s) + oracle initial position; L2b-A asks the position after the round, L2b-B asks whether the target moved. Part of the L0/L1/L2 diagnostic ladder (L0 static grounding, L1 text-only tracking, L2 one visual transition).",
+  "ground_truth_fields": {
+    "correct_for_round1_clip": "position_trace[\"1\"], move_trace[\"1\"]",
+    "used_by_cell52_and_cell53": "last position_trace entry, move_count>0"
+  },
+  "not_verifiable_here": "Whether 2.5s-7.5s really isolates Round 1 was checked only by frame grids (cells 36/37), which have no numeric output.",
+  "gt_summary": {
+    "n_videos": 50,
+    "n_rounds_distribution": {
+      "6": 50
+    },
+    "round1_position_distribution": {
+      "A": 11,
+      "B": 14,
+      "C": 17,
+      "D": 8
+    },
+    "full_final_position_distribution": {
+      "A": 11,
+      "B": 14,
+      "C": 10,
+      "D": 15
+    },
+    "round1_moved_distribution": {
+      "moved": 25,
+      "stayed": 25
+    },
+    "full_video_moved_distribution (move_count>0)": {
+      "True": 50,
+      "False": 0
+    },
+    "initial_equals_target_card": 50,
+    "round1_final_position_equals_full_final": 12
+  },
+  "files": {
+    "cell40_lowmem_round1_50": {
+      "path": "/content/drive/MyDrive/videomme_experiments/l2b/l2b_round1_lowmem_results.json",
+      "description": "low-memory L2b, 1fps Round-1 clip",
+      "exists": false
+    },
+    "cell53_L2bA_50": {
+      "path": "/content/drive/MyDrive/videomme_experiments/l2b/l2bA_final_position_only_50_fixed_results.json",
+      "description": "full-50 L2b-A, 10fps Round-1 clip",
+      "exists": true,
+      "n_records": 50,
+      "example_record_keys": [
+        "correct",
+        "elapsed_sec",
+        "error",
+        "gt_position",
+        "id",
+        "initial_position",
+        "prediction",
+        "raw_output",
+        "target_card"
+      ],
+      "tasks": {
+        "position": {
+          "n": 50,
+          "n_valid": 50,
+          "n_error_or_unparsed": 0,
+          "prediction_distribution": {
+            "B": 14,
+            "C": 4,
+            "D": 32
+          },
+          "top_prediction_share": 0.64,
+          "gt_round1_distribution": {
+            "A": 11,
+            "B": 14,
+            "C": 17,
+            "D": 8
+          },
+          "gt_full_video_distribution": {
+            "A": 11,
+            "B": 14,
+            "C": 10,
+            "D": 15
+          },
+          "majority_baseline_vs_round1_gt": 0.34,
+          "majority_baseline_vs_full_gt": 0.3,
+          "accuracy_reported_by_original_cell": 0.28,
+          "accuracy_vs_round1_gt": 0.04,
+          "accuracy_vs_full_video_gt": 0.28,
+          "original_cell_scored_against": "full",
+          "parser_disagreements_with_stored_prediction": 0,
+          "stay_put_baseline_vs_round1_gt": 0.5,
+          "verdict": "GT FIELD MISMATCH: Round-1 clip was scored against the whole-video label",
+          "reported_number_is_trustworthy": false
+        }
+      }
+    },
+    "cell53_L2bB_50": {
+      "path": "/content/drive/MyDrive/videomme_experiments/l2b/l2bB_move_only_50_fixed_results.json",
+      "description": "full-50 L2b-B, 10fps Round-1 clip (the 0/50)",
+      "exists": true,
+      "n_records": 50,
+      "example_record_keys": [
+        "correct",
+        "elapsed_sec",
+        "error",
+        "gt_final",
+        "gt_move",
+        "id",
+        "initial_position",
+        "prediction",
+        "raw_output",
+        "target_card"
+      ],
+      "tasks": {
+        "move": {
+          "n": 50,
+          "n_valid": 50,
+          "n_error_or_unparsed": 0,
+          "prediction_distribution": {
+            "False": 50
+          },
+          "top_prediction_share": 1.0,
+          "gt_round1_distribution": {
+            "False": 25,
+            "True": 25
+          },
+          "gt_full_video_distribution": {
+            "True": 50
+          },
+          "majority_baseline_vs_round1_gt": 0.5,
+          "majority_baseline_vs_full_gt": 1.0,
+          "accuracy_reported_by_original_cell": 0.0,
+          "accuracy_vs_round1_gt": 0.5,
+          "accuracy_vs_full_video_gt": 0.0,
+          "original_cell_scored_against": "full",
+          "parser_disagreements_with_stored_prediction": 0,
+          "accuracy_if_labels_inverted_vs_round1_gt": 0.5,
+          "verdict": "GT FIELD MISMATCH: Round-1 clip was scored against the whole-video label; scored label was constant (True for all 50 videos); DEGENERATE OUTPUT: 100% of predictions are the same value",
+          "reported_number_is_trustworthy": false
+        }
+      }
+    },
+    "cell52_L2bA_50": {
+      "path": "/content/drive/MyDrive/videomme_experiments/phase0_validity/L2b_A_oracle_initial_final_results.json",
+      "description": "diagnostic suite L2b-A",
+      "exists": true,
+      "n_records": 50,
+      "example_record_keys": [
+        "correct",
+        "error",
+        "gt_final",
+        "gt_initial",
+        "index",
+        "prediction",
+        "raw_output",
+        "target",
+        "video_id"
+      ],
+      "tasks": {
+        "position": {
+          "n": 50,
+          "n_valid": 0,
+          "n_error_or_unparsed": 50,
+          "prediction_distribution": {},
+          "top_prediction_share": null,
+          "gt_round1_distribution": {
+            "A": 11,
+            "B": 14,
+            "C": 17,
+            "D": 8
+          },
+          "gt_full_video_distribution": {
+            "A": 11,
+            "B": 14,
+            "C": 10,
+            "D": 15
+          },
+          "majority_baseline_vs_round1_gt": 0.34,
+          "majority_baseline_vs_full_gt": 0.3,
+          "accuracy_reported_by_original_cell": 0.0,
+          "accuracy_vs_round1_gt": null,
+          "accuracy_vs_full_video_gt": null,
+          "original_cell_scored_against": "full",
+          "parser_disagreements_with_stored_prediction": 0,
+          "verdict": "INVALID: no valid outputs (harness failure, not a model result)",
+          "reported_number_is_trustworthy": false
+        }
+      }
+    },
+    "cell52_L2bB_50": {
+      "path": "/content/drive/MyDrive/videomme_experiments/phase0_validity/L2b_B_oracle_initial_movement_results.json",
+      "description": "diagnostic suite L2b-B",
+      "exists": true,
+      "n_records": 50,
+      "example_record_keys": [
+        "correct",
+        "error",
+        "gt_initial",
+        "gt_move_count",
+        "gt_moved",
+        "index",
+        "prediction",
+        "raw_output",
+        "target",
+        "video_id"
+      ],
+      "tasks": {
+        "move": {
+          "n": 50,
+          "n_valid": 0,
+          "n_error_or_unparsed": 50,
+          "prediction_distribution": {},
+          "top_prediction_share": null,
+          "gt_round1_distribution": {
+            "False": 25,
+            "True": 25
+          },
+          "gt_full_video_distribution": {
+            "True": 50
+          },
+          "majority_baseline_vs_round1_gt": 0.5,
+          "majority_baseline_vs_full_gt": 1.0,
+          "accuracy_reported_by_original_cell": 0.0,
+          "accuracy_vs_round1_gt": null,
+          "accuracy_vs_full_video_gt": null,
+          "original_cell_scored_against": "full",
+          "parser_disagreements_with_stored_prediction": 0,
+          "verdict": "INVALID: no valid outputs (harness failure, not a model result)",
+          "reported_number_is_trustworthy": false
+        }
+      }
+    },
+    "pilotA_10_fixed": {
+      "path": "/content/drive/MyDrive/videomme_experiments/l2b/l2bA_final_position_only_10_fixed_results.json",
+      "description": "10-video pilot, fixed parser",
+      "exists": false
+    },
+    "pilotB_10": {
+      "path": "/content/drive/MyDrive/videomme_experiments/l2b/l2bB_move_only_10_results.json",
+      "description": "10-video pilot",
+      "exists": false
+    }
+  }
+}

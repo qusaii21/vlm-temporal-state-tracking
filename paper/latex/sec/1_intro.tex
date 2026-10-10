@@ -1,0 +1,44 @@
+\section{Introduction}
+
+Vision-language models represent a major advancement in multimodal understanding, achieving state-of-the-art performance on diverse visual reasoning tasks. However, a critical gap remains: can VLMs maintain and update internal state representations across video sequences? This question is essential for applications requiring persistent object tracking, such as embodied AI, activity understanding, and interactive systems.
+
+\subsection{Motivation}
+
+Card-relocation tasks provide an ideal testbed for this question. Unlike natural videos with semantic complexity and causal ambiguity, card-relocation offers:
+\begin{itemize}
+    \item \textbf{Discrete state space}: positions A/B/C/D (unambiguous ground truth)
+    \item \textbf{Observable transitions}: visual card swaps over six rounds
+    \item \textbf{Compositional structure}: iterative state updates requiring tracking
+    \item \textbf{No extraneous reasoning}: task demands pure state tracking, not world knowledge
+\end{itemize}
+
+Trajectory supervision---prompting models to output intermediate states---seems promising, inspired by chain-of-thought prompting's success in language models~\cite{wei2022chain}. Yet a key methodological question remains unanswered: does intermediate supervision improve \emph{genuine} tracking, or primarily teaches models to generate structured outputs matching training distributions?
+
+\subsection{Research Question and Approach}
+
+We ask:
+\begin{quote}
+\emph{When a VLM is trained to output intermediate visual states (trajectory supervision), does that training repair genuine temporal state tracking, or does it primarily teach output format patterns?}
+\end{quote}
+
+To address this, we employ a \textbf{format-matched negative control} (Model B$'$v3): a training dataset identical in structure and statistical properties to ground-truth trajectories, but with labels corrupted to break visual-label correspondence. If trajectory supervision (Model B) does not outperform the corrupted control (B$'$v3), it suggests format learning dominates over semantic tracking.
+
+\subsection{Contributions}
+
+\begin{enumerate}
+    \item \textbf{Methodological framework}: A complete pipeline for controlled VLM behavioral studies, including format-matched negative controls and small-sample statistical testing.
+    
+    \item \textbf{Dataset audit findings}: Discovery of a systematic confound (target\_card $\equiv$ initial\_position) across all 50 videos, demonstrating the necessity of ground-truth validation in VLM evaluation.
+    
+    \item \textbf{Transparent null reporting}: Honest reporting of a small-sample null result with power analysis and explicit reproducibility materials, rather than p-hacking or post-hoc analysis.
+    
+    \item \textbf{Complete reproducibility}: 24 journey files documenting experimental iterations, artifact verification tables, and hardcoded hyperparameters enabling reproduction.
+\end{enumerate}
+
+\subsection{Scope and Limitations}
+
+This is a \emph{pilot study} with inherent limitations: single 3B model, $n=10$ test videos, synthetic task. We explicitly do not claim trajectory supervision \emph{never} works, only that under these specific conditions (frozen vision tower, 40 training examples, Qwen2.5-VL-3B), it did not show clear advantage over format learning. Larger-scale work with diverse models and tasks is needed.
+
+\subsection{Paper Organization}
+
+We first review related work (\S\ref{sec:related}), then describe the task and experimental design (\S\ref{sec:methods}). Experimental setup and results follow (\S\ref{sec:experiments}, \S\ref{sec:results}). Discussion (\S\ref{sec:analysis}) positions our null result within the broader literature and provides power analysis. Conclusion (\S\ref{sec:conclusion}) outlines future directions.

@@ -1,0 +1,1016 @@
+{
+  "summary": {
+    "fold": 0,
+    "n": 40,
+    "methods": {
+      "hungarian_move_matched": 40
+    },
+    "mean_moves_true": 2.975,
+    "mean_moves_corrupted": 3.0,
+    "move_hist_l1": 2,
+    "letter_freq_l1": 0,
+    "majority_diverged": 29
+  },
+  "audit_rows": [
+    {
+      "id": "card_relocation_s_L1_0001_v3",
+      "source": "card_relocation_s_L1_0002_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 4,
+      "true": [
+        "A",
+        "B",
+        "C",
+        "C",
+        "C",
+        "B"
+      ],
+      "corrupted": [
+        "D",
+        "A",
+        "C",
+        "D",
+        "D",
+        "B"
+      ],
+      "true_moves": 4,
+      "corrupted_moves": 4
+    },
+    {
+      "id": "card_relocation_s_L1_0002_v3",
+      "source": "card_relocation_s_L1_0003_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 3,
+      "true": [
+        "D",
+        "A",
+        "C",
+        "D",
+        "D",
+        "D"
+      ],
+      "corrupted": [
+        "D",
+        "C",
+        "C",
+        "C",
+        "A",
+        "D"
+      ],
+      "true_moves": 3,
+      "corrupted_moves": 3
+    },
+    {
+      "id": "card_relocation_s_L1_0003_v3",
+      "source": "card_relocation_s_L1_0006_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 3,
+      "true": [
+        "D",
+        "C",
+        "C",
+        "C",
+        "A",
+        "B"
+      ],
+      "corrupted": [
+        "C",
+        "C",
+        "B",
+        "C",
+        "B",
+        "B"
+      ],
+      "true_moves": 4,
+      "corrupted_moves": 4
+    },
+    {
+      "id": "card_relocation_s_L1_0004_v3",
+      "source": "card_relocation_s_L1_0013_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 4,
+      "true": [
+        "C",
+        "C",
+        "C",
+        "D",
+        "A",
+        "D"
+      ],
+      "corrupted": [
+        "B",
+        "B",
+        "B",
+        "A",
+        "A",
+        "D"
+      ],
+      "true_moves": 3,
+      "corrupted_moves": 3
+    },
+    {
+      "id": "card_relocation_s_L1_0005_v3",
+      "source": "card_relocation_s_L1_0035_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 3,
+      "true": [
+        "D",
+        "B",
+        "A",
+        "A",
+        "A",
+        "B"
+      ],
+      "corrupted": [
+        "B",
+        "A",
+        "A",
+        "A",
+        "B",
+        "B"
+      ],
+      "true_moves": 3,
+      "corrupted_moves": 3
+    },
+    {
+      "id": "card_relocation_s_L1_0006_v3",
+      "source": "card_relocation_s_L1_0011_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 4,
+      "true": [
+        "C",
+        "C",
+        "B",
+        "C",
+        "B",
+        "B"
+      ],
+      "corrupted": [
+        "A",
+        "A",
+        "C",
+        "B",
+        "B",
+        "B"
+      ],
+      "true_moves": 3,
+      "corrupted_moves": 3
+    },
+    {
+      "id": "card_relocation_s_L1_0007_v3",
+      "source": "card_relocation_s_L1_0005_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 3,
+      "true": [
+        "A",
+        "A",
+        "A",
+        "C",
+        "A",
+        "C"
+      ],
+      "corrupted": [
+        "D",
+        "B",
+        "A",
+        "A",
+        "A",
+        "C"
+      ],
+      "true_moves": 4,
+      "corrupted_moves": 4
+    },
+    {
+      "id": "card_relocation_s_L1_0008_v3",
+      "source": "card_relocation_s_L1_0028_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 4,
+      "true": [
+        "B",
+        "C",
+        "D",
+        "C",
+        "B",
+        "D"
+      ],
+      "corrupted": [
+        "C",
+        "D",
+        "B",
+        "C",
+        "D",
+        "D"
+      ],
+      "true_moves": 5,
+      "corrupted_moves": 5
+    },
+    {
+      "id": "card_relocation_s_L1_0009_v3",
+      "source": "card_relocation_s_L1_0023_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 4,
+      "true": [
+        "C",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D"
+      ],
+      "corrupted": [
+        "B",
+        "B",
+        "B",
+        "A",
+        "D",
+        "D"
+      ],
+      "true_moves": 2,
+      "corrupted_moves": 2
+    },
+    {
+      "id": "card_relocation_s_L1_0011_v3",
+      "source": "card_relocation_s_L1_0001_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 3,
+      "true": [
+        "A",
+        "A",
+        "C",
+        "B",
+        "B",
+        "A"
+      ],
+      "corrupted": [
+        "A",
+        "B",
+        "C",
+        "C",
+        "C",
+        "A"
+      ],
+      "true_moves": 4,
+      "corrupted_moves": 4
+    },
+    {
+      "id": "card_relocation_s_L1_0012_v3",
+      "source": "card_relocation_s_L1_0042_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 4,
+      "true": [
+        "B",
+        "C",
+        "A",
+        "D",
+        "D",
+        "D"
+      ],
+      "corrupted": [
+        "B",
+        "D",
+        "B",
+        "B",
+        "B",
+        "D"
+      ],
+      "true_moves": 4,
+      "corrupted_moves": 4
+    },
+    {
+      "id": "card_relocation_s_L1_0013_v3",
+      "source": "card_relocation_s_L1_0050_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 5,
+      "true": [
+        "B",
+        "B",
+        "B",
+        "A",
+        "A",
+        "C"
+      ],
+      "corrupted": [
+        "D",
+        "D",
+        "D",
+        "C",
+        "C",
+        "C"
+      ],
+      "true_moves": 2,
+      "corrupted_moves": 2
+    },
+    {
+      "id": "card_relocation_s_L1_0014_v3",
+      "source": "card_relocation_s_L1_0017_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 2,
+      "true": [
+        "A",
+        "B",
+        "A",
+        "A",
+        "A",
+        "A"
+      ],
+      "corrupted": [
+        "D",
+        "C",
+        "A",
+        "A",
+        "A",
+        "A"
+      ],
+      "true_moves": 3,
+      "corrupted_moves": 3
+    },
+    {
+      "id": "card_relocation_s_L1_0016_v3",
+      "source": "card_relocation_s_L1_0008_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 5,
+      "true": [
+        "C",
+        "A",
+        "A",
+        "D",
+        "D",
+        "B"
+      ],
+      "corrupted": [
+        "B",
+        "C",
+        "D",
+        "C",
+        "B",
+        "B"
+      ],
+      "true_moves": 4,
+      "corrupted_moves": 4
+    },
+    {
+      "id": "card_relocation_s_L1_0017_v3",
+      "source": "card_relocation_s_L1_0021_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 3,
+      "true": [
+        "D",
+        "C",
+        "A",
+        "A",
+        "A",
+        "A"
+      ],
+      "corrupted": [
+        "B",
+        "D",
+        "D",
+        "A",
+        "A",
+        "A"
+      ],
+      "true_moves": 3,
+      "corrupted_moves": 3
+    },
+    {
+      "id": "card_relocation_s_L1_0018_v3",
+      "source": "card_relocation_s_L1_0012_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 5,
+      "true": [
+        "D",
+        "A",
+        "C",
+        "B",
+        "B",
+        "D"
+      ],
+      "corrupted": [
+        "B",
+        "C",
+        "A",
+        "D",
+        "D",
+        "D"
+      ],
+      "true_moves": 4,
+      "corrupted_moves": 4
+    },
+    {
+      "id": "card_relocation_s_L1_0019_v3",
+      "source": "card_relocation_s_L1_0043_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 3,
+      "true": [
+        "C",
+        "C",
+        "D",
+        "B",
+        "B",
+        "B"
+      ],
+      "corrupted": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "A",
+        "B"
+      ],
+      "true_moves": 2,
+      "corrupted_moves": 2
+    },
+    {
+      "id": "card_relocation_s_L1_0020_v3",
+      "source": "card_relocation_s_L1_0040_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 1,
+      "true": [
+        "B",
+        "B",
+        "D",
+        "D",
+        "D",
+        "D"
+      ],
+      "corrupted": [
+        "B",
+        "B",
+        "B",
+        "D",
+        "D",
+        "D"
+      ],
+      "true_moves": 1,
+      "corrupted_moves": 1
+    },
+    {
+      "id": "card_relocation_s_L1_0021_v3",
+      "source": "card_relocation_s_L1_0014_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 3,
+      "true": [
+        "B",
+        "D",
+        "D",
+        "A",
+        "A",
+        "B"
+      ],
+      "corrupted": [
+        "A",
+        "B",
+        "A",
+        "A",
+        "A",
+        "B"
+      ],
+      "true_moves": 4,
+      "corrupted_moves": 4
+    },
+    {
+      "id": "card_relocation_s_L1_0022_v3",
+      "source": "card_relocation_s_L1_0046_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 5,
+      "true": [
+        "A",
+        "A",
+        "A",
+        "B",
+        "A",
+        "C"
+      ],
+      "corrupted": [
+        "B",
+        "B",
+        "B",
+        "D",
+        "D",
+        "C"
+      ],
+      "true_moves": 3,
+      "corrupted_moves": 3
+    },
+    {
+      "id": "card_relocation_s_L1_0023_v3",
+      "source": "card_relocation_s_L1_0019_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 5,
+      "true": [
+        "B",
+        "B",
+        "B",
+        "A",
+        "D",
+        "D"
+      ],
+      "corrupted": [
+        "C",
+        "C",
+        "D",
+        "B",
+        "B",
+        "D"
+      ],
+      "true_moves": 3,
+      "corrupted_moves": 3
+    },
+    {
+      "id": "card_relocation_s_L1_0026_v3",
+      "source": "card_relocation_s_L1_0022_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 3,
+      "true": [
+        "C",
+        "C",
+        "A",
+        "A",
+        "A",
+        "A"
+      ],
+      "corrupted": [
+        "A",
+        "A",
+        "A",
+        "B",
+        "A",
+        "A"
+      ],
+      "true_moves": 2,
+      "corrupted_moves": 2
+    },
+    {
+      "id": "card_relocation_s_L1_0028_v3",
+      "source": "card_relocation_s_L1_0018_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 5,
+      "true": [
+        "C",
+        "D",
+        "B",
+        "C",
+        "D",
+        "C"
+      ],
+      "corrupted": [
+        "D",
+        "A",
+        "C",
+        "B",
+        "B",
+        "C"
+      ],
+      "true_moves": 5,
+      "corrupted_moves": 5
+    },
+    {
+      "id": "card_relocation_s_L1_0029_v3",
+      "source": "card_relocation_s_L1_0032_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 1,
+      "true": [
+        "A",
+        "A",
+        "A",
+        "A",
+        "C",
+        "C"
+      ],
+      "corrupted": [
+        "A",
+        "A",
+        "A",
+        "C",
+        "C",
+        "C"
+      ],
+      "true_moves": 1,
+      "corrupted_moves": 1
+    },
+    {
+      "id": "card_relocation_s_L1_0030_v3",
+      "source": "card_relocation_s_L1_0041_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 5,
+      "true": [
+        "C",
+        "B",
+        "A",
+        "D",
+        "D",
+        "A"
+      ],
+      "corrupted": [
+        "B",
+        "D",
+        "C",
+        "C",
+        "B",
+        "A"
+      ],
+      "true_moves": 5,
+      "corrupted_moves": 5
+    },
+    {
+      "id": "card_relocation_s_L1_0032_v3",
+      "source": "card_relocation_s_L1_0039_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 2,
+      "true": [
+        "A",
+        "A",
+        "A",
+        "C",
+        "C",
+        "A"
+      ],
+      "corrupted": [
+        "A",
+        "A",
+        "A",
+        "D",
+        "A",
+        "A"
+      ],
+      "true_moves": 2,
+      "corrupted_moves": 2
+    },
+    {
+      "id": "card_relocation_s_L1_0033_v3",
+      "source": "card_relocation_s_L1_0009_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 2,
+      "true": [
+        "C",
+        "C",
+        "C",
+        "D",
+        "D",
+        "D"
+      ],
+      "corrupted": [
+        "C",
+        "D",
+        "D",
+        "D",
+        "D",
+        "D"
+      ],
+      "true_moves": 1,
+      "corrupted_moves": 1
+    },
+    {
+      "id": "card_relocation_s_L1_0034_v3",
+      "source": "card_relocation_s_L1_0045_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 2,
+      "true": [
+        "A",
+        "B",
+        "B",
+        "B",
+        "C",
+        "C"
+      ],
+      "corrupted": [
+        "C",
+        "C",
+        "B",
+        "B",
+        "C",
+        "C"
+      ],
+      "true_moves": 3,
+      "corrupted_moves": 3
+    },
+    {
+      "id": "card_relocation_s_L1_0035_v3",
+      "source": "card_relocation_s_L1_0004_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 5,
+      "true": [
+        "B",
+        "A",
+        "A",
+        "A",
+        "B",
+        "D"
+      ],
+      "corrupted": [
+        "C",
+        "C",
+        "C",
+        "D",
+        "A",
+        "D"
+      ],
+      "true_moves": 4,
+      "corrupted_moves": 4
+    },
+    {
+      "id": "card_relocation_s_L1_0036_v3",
+      "source": "card_relocation_s_L1_0033_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 2,
+      "true": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "B",
+        "B"
+      ],
+      "corrupted": [
+        "C",
+        "C",
+        "C",
+        "D",
+        "D",
+        "B"
+      ],
+      "true_moves": 1,
+      "corrupted_moves": 2
+    },
+    {
+      "id": "card_relocation_s_L1_0039_v3",
+      "source": "card_relocation_s_L1_0007_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 1,
+      "true": [
+        "A",
+        "A",
+        "A",
+        "D",
+        "A",
+        "A"
+      ],
+      "corrupted": [
+        "A",
+        "A",
+        "A",
+        "C",
+        "A",
+        "A"
+      ],
+      "true_moves": 2,
+      "corrupted_moves": 2
+    },
+    {
+      "id": "card_relocation_s_L1_0040_v3",
+      "source": "card_relocation_s_L1_0029_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 5,
+      "true": [
+        "B",
+        "B",
+        "B",
+        "D",
+        "D",
+        "D"
+      ],
+      "corrupted": [
+        "A",
+        "A",
+        "A",
+        "A",
+        "C",
+        "D"
+      ],
+      "true_moves": 2,
+      "corrupted_moves": 2
+    },
+    {
+      "id": "card_relocation_s_L1_0041_v3",
+      "source": "card_relocation_s_L1_0034_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 5,
+      "true": [
+        "B",
+        "D",
+        "C",
+        "C",
+        "B",
+        "B"
+      ],
+      "corrupted": [
+        "A",
+        "B",
+        "B",
+        "B",
+        "C",
+        "B"
+      ],
+      "true_moves": 4,
+      "corrupted_moves": 4
+    },
+    {
+      "id": "card_relocation_s_L1_0042_v3",
+      "source": "card_relocation_s_L1_0047_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 5,
+      "true": [
+        "B",
+        "D",
+        "B",
+        "B",
+        "B",
+        "C"
+      ],
+      "corrupted": [
+        "C",
+        "A",
+        "D",
+        "A",
+        "A",
+        "C"
+      ],
+      "true_moves": 4,
+      "corrupted_moves": 4
+    },
+    {
+      "id": "card_relocation_s_L1_0043_v3",
+      "source": "card_relocation_s_L1_0026_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 2,
+      "true": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "A",
+        "A"
+      ],
+      "corrupted": [
+        "C",
+        "C",
+        "A",
+        "A",
+        "A",
+        "A"
+      ],
+      "true_moves": 1,
+      "corrupted_moves": 1
+    },
+    {
+      "id": "card_relocation_s_L1_0044_v3",
+      "source": "card_relocation_s_L1_0016_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 3,
+      "true": [
+        "C",
+        "C",
+        "C",
+        "B",
+        "D",
+        "A"
+      ],
+      "corrupted": [
+        "C",
+        "A",
+        "A",
+        "D",
+        "D",
+        "A"
+      ],
+      "true_moves": 3,
+      "corrupted_moves": 3
+    },
+    {
+      "id": "card_relocation_s_L1_0045_v3",
+      "source": "card_relocation_s_L1_0044_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 2,
+      "true": [
+        "C",
+        "C",
+        "B",
+        "B",
+        "C",
+        "B"
+      ],
+      "corrupted": [
+        "C",
+        "C",
+        "C",
+        "B",
+        "D",
+        "B"
+      ],
+      "true_moves": 3,
+      "corrupted_moves": 3
+    },
+    {
+      "id": "card_relocation_s_L1_0046_v3",
+      "source": "card_relocation_s_L1_0020_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 1,
+      "true": [
+        "B",
+        "B",
+        "B",
+        "D",
+        "D",
+        "D"
+      ],
+      "corrupted": [
+        "B",
+        "B",
+        "D",
+        "D",
+        "D",
+        "D"
+      ],
+      "true_moves": 1,
+      "corrupted_moves": 1
+    },
+    {
+      "id": "card_relocation_s_L1_0047_v3",
+      "source": "card_relocation_s_L1_0030_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 4,
+      "true": [
+        "C",
+        "A",
+        "D",
+        "A",
+        "A",
+        "C"
+      ],
+      "corrupted": [
+        "C",
+        "B",
+        "A",
+        "D",
+        "D",
+        "C"
+      ],
+      "true_moves": 5,
+      "corrupted_moves": 5
+    },
+    {
+      "id": "card_relocation_s_L1_0050_v3",
+      "source": "card_relocation_s_L1_0036_v3",
+      "method": "hungarian_move_matched",
+      "n_intermediate": 5,
+      "n_changed": 4,
+      "true": [
+        "D",
+        "D",
+        "D",
+        "C",
+        "C",
+        "B"
+      ],
+      "corrupted": [
+        "C",
+        "C",
+        "C",
+        "C",
+        "B",
+        "B"
+      ],
+      "true_moves": 2,
+      "corrupted_moves": 2
+    }
+  ]
+}

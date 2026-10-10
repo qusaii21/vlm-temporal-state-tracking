@@ -1,0 +1,83 @@
+\section{Experiments}
+\label{sec:experiments}
+
+This section describes experimental setup, diagnostics, and preliminary explorations that motivated the final controlled comparison.
+
+\subsection{Experiment E1a: Native Video Diagnostic}
+
+\textbf{Objective}: Verify that the base model receives true temporal input and establish performance ceiling under native video processing.
+
+\textbf{Setup}:
+\begin{itemize}
+    \item Model: Qwen2.5-VL-3B-Instruct (base, no fine-tuning)
+    \item Input: Native Qwen video pathway (not separate-image fallback)
+    \item Frames: Exactly 24 per video
+    \item All 50 card-relocation videos
+    \item Verification: Check that native temporal metadata (second\_per\_grid\_ts) present for all records
+\end{itemize}
+
+\textbf{Results}:
+\begin{itemize}
+    \item Valid JSON: 50/50 records
+    \item Complete six-round trace (exact match): 0/50 (0\%)
+    \item Final-position accuracy: 12/50 (24\%)
+    \item Single-round position accuracy: \textasciitilde19\%
+    \item Native temporal metadata verified: all 50 records have 24 frames
+\end{itemize}
+
+\textbf{Interpretation}: Base model receives true temporal input but achieves near-random accuracy on final position (24\% vs. 25\% random baseline) and 0\% on complete traces. This establishes that poor performance is not due to input processing failures---the model has genuine difficulty tracking state.
+
+\subsection{Baseline (Zero-Shot) Evaluation on Test Set}
+
+\textbf{Results on 10 held-out videos}:
+\begin{itemize}
+    \item Final-answer prompt: 0.20 (2/10)
+    \item Trajectory prompt: 0.20 (2/10)
+    \item Per-round accuracy: 0.167 (10/60)
+\end{itemize}
+
+Baseline performance establishes a floor: any improvement from supervised training should exceed this.
+
+\subsection{Final-Frame-Only Baseline}
+
+\textbf{Objective}: Control for static image shortcuts (e.g., final frame revealing position).
+
+\textbf{Setup}: Run model on final frame only (without prior video context).
+
+\textbf{Results on 50 videos}:
+\begin{itemize}
+    \item Accuracy: 12/50 (24\%)
+    \item Random baseline: 25\%
+    \item Majority baseline: 30\%
+    \item Prediction distribution: A=0, B=32, C=12, D=6
+    \item Ground-truth distribution: A=11, B=14, C=10, D=15
+\end{itemize}
+
+Conclusion: Final-frame-only does not exceed baselines. Models cannot exploit static image shortcuts.
+
+\subsection{Diagnostic Findings}
+
+\textbf{Discovery: target\_card $\equiv$ initial\_position}
+
+Audit across all 50 videos revealed 100\% of videos have target card in initial position. Early initial-position diagnostics achieved \textasciitilde76\% accuracy, but this was spurious: models could simply emit the target card label without visual grounding. This confound invalidated early diagnostics and motivated redesigned evaluation (final-position, trajectory, exact-match metrics).
+
+\textbf{Invalid L2 Experiment}
+
+An earlier experiment (``L2'') used ground-truth files with incorrect field mapping (position\_after\_round\_X instead of position\_trace). Results: 0/50 accuracy. This experiment was rejected from scientific results and documented in validity audit section.
+
+\subsection{Exploratory Frame-Order Control (Step 9)}
+
+\textbf{Objective}: Exploratory test whether temporal ordering matters.
+
+\textbf{Setup}: Model B evaluated on shuffled video frames.
+
+\textbf{Important limitation}: This experiment used \emph{separate-image input}, not native video. Technical constraint discovered post-hoc. Therefore, results cannot isolate temporal-order effects cleanly.
+
+\textbf{Results}:
+\begin{itemize}
+    \item True order final accuracy: 0.10 (1/10)
+    \item Shuffled order final accuracy: 0.10 (1/10)
+    \item Per-round: 0.25 vs. 0.25 (identical)
+\end{itemize}
+
+\textbf{Status}: Retained for transparency, marked as exploratory and unsuitable for causal claims about temporal ordering. Recommendation for future work: implement frame shuffling within native video pipeline for proper testing.

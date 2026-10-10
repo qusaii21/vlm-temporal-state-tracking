@@ -1,0 +1,44 @@
+\section{Related Work}
+\label{sec:related}
+
+\subsection{Vision-Language Models for Video Understanding}
+
+Large-scale VLMs have achieved impressive performance on diverse benchmarks by training on web-scale image-text data. Recent work extends these models to video by incorporating temporal information. Qwen2-VL~\cite{wang2024qwen} introduces dynamic resolution processing and unified image-video-text pathways. Video-MME~\cite{fu2024video} provides comprehensive evaluation of multimodal LLMs across perception, reasoning, and knowledge tasks, establishing baselines for temporal understanding.
+
+However, most VLM evaluations focus on question-answering accuracy over diverse, naturalistic content. Controlled studies isolating specific reasoning components (e.g., temporal state tracking) remain sparse.
+
+\subsection{Temporal Reasoning and State Tracking}
+
+Temporal reasoning in neural networks spans recurrent architectures (sequential modeling), transformer attention (temporal attention), and memory-augmented approaches (persistent state). Video QA benchmarks often conflate multiple reasoning types: spatial understanding, temporal ordering, causal inference, and social knowledge.
+
+Our card-relocation task isolates a specific component: \emph{iterative state updates}. The model must (1) bind a target object identity, (2) observe transitions, and (3) maintain updated state across six rounds. This is simpler than naturalistic reasoning but captures the core challenge of state persistence.
+
+\subsection{Shortcut Learning and Negative Controls}
+
+Deep learning models often exploit spurious correlations rather than learning intended solutions~\cite{geirhos2020shortcut}. In our dataset, we discovered target\_card $\equiv$ initial\_position for all 50 videos---a shortcut that would inflate initial-position accuracy without visual grounding.
+
+Negative controls---inputs that preserve surface features while breaking semantic validity---are standard in neuroscience and causal inference but underutilized in VLM evaluation. Our B$'$v3 control uses cross-example Hungarian matching to construct trajectories with identical:
+\begin{itemize}
+    \item Output format (six position labels)
+    \item Letter frequencies (corpus-level distribution)
+    \item Move-count distribution (similar transitions per video)
+\end{itemize}
+while breaking visual-label correspondence.
+
+\subsection{Chain-of-Thought and Intermediate Supervision}
+
+Chain-of-thought prompting~\cite{wei2022chain} improves language model reasoning by eliciting intermediate steps, even at zero-shot. Whether intermediate \emph{supervision} (training with intermediate states) similarly benefits visual reasoning, particularly when visual-linguistic grounding is required, remains an open question.
+
+Our trajectory supervision can be viewed as structured intermediate-state annotation. The null result against a format-matched control suggests that under these conditions, trajectory training teaches output format more readily than visual-temporal semantics.
+
+\subsection{Small-Sample Statistical Testing}
+
+With limited test data ($n=10$ videos), standard hypothesis testing is underpowered. We employ:
+\begin{itemize}
+    \item \textbf{Exact binomial confidence intervals} (Clopper-Pearson) rather than normal approximations
+    \item \textbf{McNemar's test} for paired binary comparisons
+    \item \textbf{Explicit power analysis} indicating minimum detectable effects ($\approx 60\%$ at $n=10$)
+    \item \textbf{Cautious framing}: conditional findings requiring replication with larger samples
+\end{itemize}
+
+This approach acknowledges small-$n$ limitations while maintaining statistical rigor.
